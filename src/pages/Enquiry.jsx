@@ -12,7 +12,8 @@ const Enquiry = () => {
     
     const formData = new FormData(e.target);
     // Replace 'YOUR_ACCESS_KEY_HERE' with the key from web3forms.com
-    formData.append("access_key", "YOUR_ACCESS_KEY_HERE");
+    formData.append("access_key", "9de47d28-c596-4638-873a-1c410be8cd90");
+
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
