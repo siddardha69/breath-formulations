@@ -136,13 +136,19 @@ const Contact = () => {
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
+                    {/* Hidden fields for Web3Forms */}
+                    <input type="hidden" name="access_key" value="0d188c4d-89fd-430b-a009-b350dac2dfab" />
+                    <input type="hidden" name="subject" value="New Website Contact Inquiry - Breath Formulations" />
+                    <input type="hidden" name="from_name" value="Breath Formulations Website" />
+                    <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-brand-text ml-1">Full Name</label>
                         <input 
                           required
-                          name="full_name"
+                          name="name"
                           type="text" 
                           placeholder="Dr. Julian Vane"
                           className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
@@ -183,6 +189,7 @@ const Contact = () => {
                       </div>
                     </div>
 
+
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-brand-text ml-1">Inquiry Details</label>
                       <textarea 
@@ -196,12 +203,12 @@ const Contact = () => {
 
                     <button 
                       type="submit" 
-                      disabled={formState === 'submitting'}
-                      className="w-full btn-primary py-5 flex items-center justify-center gap-3 text-lg disabled:opacity-70"
+                      className="w-full btn-primary py-5 flex items-center justify-center gap-3 text-lg"
                     >
-                      {formState === 'submitting' ? 'Sending...' : 'Send Message'}
+                      Send Message
                       <Send size={20} />
                     </button>
+
                   </form>
                 )}
               </div>

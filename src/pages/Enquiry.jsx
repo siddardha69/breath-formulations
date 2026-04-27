@@ -122,11 +122,16 @@ const Enquiry = () => {
                 <button onClick={() => setFormState('idle')} className="btn-primary">Back to Form</button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-8">
+              <form action="https://api.web3forms.com/submit" method="POST" className="space-y-8">
+                {/* Hidden fields for Web3Forms */}
+                <input type="hidden" name="access_key" value="0d188c4d-89fd-430b-a009-b350dac2dfab" />
+                <input type="hidden" name="subject" value="New Distributor Application - Breath Formulations" />
+                <input type="hidden" name="from_name" value="Breath Formulations Website" />
+
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-brand-text">Full Name</label>
-                    <input required name="full_name" type="text" placeholder="John Doe" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
+                    <input required name="name" type="text" placeholder="John Doe" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-brand-text">Business / Company Name</label>
@@ -181,6 +186,7 @@ const Enquiry = () => {
                   Submit Application <Send size={20} />
                 </button>
               </form>
+
             )}
           </div>
         </div>
