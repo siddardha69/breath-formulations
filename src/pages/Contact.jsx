@@ -1,41 +1,37 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formState, setFormState] = useState('idle'); // idle, submitting, success
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setFormState('submitting');
-    
-    const formData = new FormData(e.target);
-    const object = Object.fromEntries(formData);
-    object.access_key = "0d188c4d-89fd-430b-a009-b350dac2dfab";
-    object.subject = "New Website Contact Inquiry - Breath Formulations";
 
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(object)
+    // Replace these with your actual IDs from EmailJS
+    const serviceId = 'YOUR_SERVICE_ID';
+    const templateId = 'YOUR_TEMPLATE_ID';
+    const publicKey = 'YOUR_PUBLIC_KEY';
+
+    const templateParams = {
+      name: e.target.name.value,
+      email: e.target.email.value,
+      phone: e.target.phone.value,
+      location: e.target.location.value,
+      message: e.target.message.value,
+    };
+
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then((result) => {
+          console.log('SUCCESS!', result.status, result.text);
+          setFormState('success');
+      }, (error) => {
+          console.log('FAILED...', error);
+          setFormState('idle');
+          alert("Email delivery failed. Please check your EmailJS IDs.");
       });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setFormState('success');
-      } else {
-        setFormState('idle');
-        alert("Submission failed. Please check your Web3Forms dashboard.");
-      }
-    } catch (error) {
-      setFormState('idle');
-      alert("Network error. Please try again.");
-    }
   };
 
 
@@ -81,22 +77,38 @@ const Contact = () => {
               </div>
 
               <div className="grid sm:grid-cols-2 gap-8">
-                {[
-                  { icon: <MapPin />, label: 'Address', value: 'Vizianagaram, 535005, Andhra Pradesh, India' },
-                  { icon: <Phone />, label: 'Phone', value: '+91 79976 94788' },
-                  { icon: <Mail />, label: 'Email', value: 'breathformulations@gmail.com' },
-                  { icon: <Clock />, label: 'Hours', value: 'Mon–Sat, 9:00 AM – 6:00 PM' },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4">
-                    <div className="w-12 h-12 bg-brand-blue/10 text-brand-blue rounded-xl flex items-center justify-center shrink-0">
-                      {item.icon}
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-brand-text mb-1">{item.label}</h4>
-                      <p className="text-brand-muted text-sm leading-relaxed">{item.value}</p>
-                    </div>
+                <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors">
+                  <div className="w-12 h-12 bg-brand-blue/10 rounded-lg flex items-center justify-center shrink-0">
+                    <Phone className="text-brand-blue" size={24} />
                   </div>
-                ))}
+                  <div>
+                    <p className="text-sm text-gray-500 font-medium">Phone Number</p>
+                    <p className="text-brand-text font-bold">+91 94906 62886</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors">
+                  <div className="w-12 h-12 bg-brand-blue/10 rounded-lg flex items-center justify-center shrink-0">
+                    <MapPin className="text-brand-blue" size={24} />
+                  </div>
+                  <div>
+                    <p className="text-sm text-gray-500 font-medium">Headquarters</p>
+                    <p className="text-brand-text font-bold leading-relaxed">
+                      Breath Formulations,<br />
+                      14-20-641/C, Rajiv Gandhi Nagar,<br />
+                      Borabanda, Allapur, PO: Santhnagar,<br />
+                      Malkajgiri, Telangana - 500018
+                    </p>
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Breath+Formulations+14-20-641/C+Rajiv+Gandhi+Nagar+Borabanda+Allapur+Santhnagar+500018" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-brand-blue text-sm font-bold hover:underline mt-2 inline-block"
+                    >
+                      View on Google Maps →
+                    </a>
+                  </div>
+                </div>
               </div>
 
               {/* Map Placeholder */}
@@ -108,10 +120,7 @@ const Contact = () => {
                        </div>
                        <div>
                           <p className="font-bold text-brand-text">Breath Formulations HQ</p>
-                          <p className="text-sm text-brand-muted italic">Vizianagaram, Andhra Pradesh</p>
-                       </div>
-                       <div className="pt-4">
-                          <button className="text-brand-blue font-bold text-sm underline">View on Google Maps</button>
+                          <p className="text-sm text-brand-muted italic">Telangana, India</p>
                        </div>
                     </div>
                  </div>
@@ -136,12 +145,8 @@ const Contact = () => {
                     </button>
                   </div>
                 ) : (
-                  <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
-                    {/* Hidden fields for Web3Forms */}
-                    <input type="hidden" name="access_key" value="0d188c4d-89fd-430b-a009-b350dac2dfab" />
-                    <input type="hidden" name="subject" value="New Website Contact Inquiry - Breath Formulations" />
-                    <input type="hidden" name="from_name" value="Breath Formulations Website" />
-                    <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+                  <form onSubmit={handleSubmit} className="space-y-6">
+
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
@@ -203,11 +208,13 @@ const Contact = () => {
 
                     <button 
                       type="submit" 
-                      className="w-full btn-primary py-5 flex items-center justify-center gap-3 text-lg"
+                      disabled={formState === 'submitting'}
+                      className="w-full btn-primary py-5 flex items-center justify-center gap-3 text-lg disabled:opacity-70"
                     >
-                      Send Message
+                      {formState === 'submitting' ? 'Sending...' : 'Send Message'}
                       <Send size={20} />
                     </button>
+
 
                   </form>
                 )}

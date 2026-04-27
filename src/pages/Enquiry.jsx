@@ -1,50 +1,46 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, ChevronDown, Plus, Minus, Send, Package, Globe, Headphones } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Enquiry = () => {
   const [formState, setFormState] = useState('idle');
   const [openFaq, setOpenFaq] = useState(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setFormState('submitting');
-    
+
+    // Replace these with your actual IDs from EmailJS
+    const serviceId = 'YOUR_SERVICE_ID';
+    const templateId = 'YOUR_TEMPLATE_ID';
+    const publicKey = 'YOUR_PUBLIC_KEY';
+
     const formData = new FormData(e.target);
-    const object = Object.fromEntries(formData);
-    
-    // Convert multiple checkbox values into a string
     const interests = formData.getAll('interest');
-    if (interests.length > 0) {
-      object.interest = interests.join(', ');
-    }
 
-    object.access_key = "0d188c4d-89fd-430b-a009-b350dac2dfab";
-    object.subject = "New Distributor Application - Breath Formulations";
+    const templateParams = {
+      name: e.target.name.value,
+      company_name: e.target.company_name.value,
+      email: e.target.email.value,
+      phone: e.target.phone.value,
+      location: e.target.location.value,
+      requirement: e.target.requirement.value,
+      message: e.target.message.value,
+      interest: interests.join(', '),
+    };
 
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify(object)
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then((result) => {
+          console.log('SUCCESS!', result.status, result.text);
+          setFormState('success');
+      }, (error) => {
+          console.log('FAILED...', error);
+          setFormState('idle');
+          alert("Email delivery failed. Please check your EmailJS IDs.");
       });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setFormState('success');
-      } else {
-        setFormState('idle');
-        alert("Submission failed. Please check your Web3Forms dashboard.");
-      }
-    } catch (error) {
-      setFormState('idle');
-      alert("Network error. Please try again.");
-    }
   };
+
 
 
 
@@ -122,11 +118,8 @@ const Enquiry = () => {
                 <button onClick={() => setFormState('idle')} className="btn-primary">Back to Form</button>
               </div>
             ) : (
-              <form action="https://api.web3forms.com/submit" method="POST" className="space-y-8">
-                {/* Hidden fields for Web3Forms */}
-                <input type="hidden" name="access_key" value="0d188c4d-89fd-430b-a009-b350dac2dfab" />
-                <input type="hidden" name="subject" value="New Distributor Application - Breath Formulations" />
-                <input type="hidden" name="from_name" value="Breath Formulations Website" />
+              <form onSubmit={handleSubmit} className="space-y-8">
+
 
                 <div className="grid md:grid-cols-2 gap-8">
                   <div className="space-y-2">
@@ -182,9 +175,15 @@ const Enquiry = () => {
                   <textarea name="message" rows="4" placeholder="Tell us about your distribution experience..." className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl resize-none" />
                 </div>
 
-                <button type="submit" className="w-full btn-primary py-5 text-xl flex items-center justify-center gap-3">
-                  Submit Application <Send size={20} />
+                <button 
+                  type="submit" 
+                  disabled={formState === 'submitting'}
+                  className="w-full btn-primary py-5 text-xl flex items-center justify-center gap-3 disabled:opacity-70"
+                >
+                  {formState === 'submitting' ? 'Sending...' : 'Submit Application'} 
+                  <Send size={20} />
                 </button>
+
               </form>
 
             )}

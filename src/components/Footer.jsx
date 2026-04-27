@@ -59,12 +59,17 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="text-brand-blue shrink-0 mt-1" size={20} />
-                <span className="text-gray-400">Vizianagaram, 535005,<br />Andhra Pradesh, India</span>
+                <span className="text-gray-400">
+                  Breath Formulations,<br />
+                  Borabanda, Allapur, Santhnagar,<br />
+                  Telangana - 500018
+                </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="text-brand-blue shrink-0" size={20} />
-                <span className="text-gray-400">+91 79976 94788</span>
+                <span className="text-gray-400">+91 94906 62886</span>
               </li>
+
               <li className="flex items-center gap-3">
                 <Mail className="text-brand-blue shrink-0" size={20} />
                 <span className="text-gray-400">breathformulations@gmail.com</span>
