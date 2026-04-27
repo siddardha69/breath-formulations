@@ -13,6 +13,8 @@ const Enquiry = () => {
     const formData = new FormData(e.target);
     // Replace 'YOUR_ACCESS_KEY_HERE' with the key from web3forms.com
     formData.append("access_key", "9de47d28-c596-4638-873a-1c410be8cd90");
+    formData.append("subject", "New Distributor Application - Breath Formulations");
+    formData.append("from_name", "Breath Formulations Website");
 
 
     try {
