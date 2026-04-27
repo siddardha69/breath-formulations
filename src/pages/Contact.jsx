@@ -96,7 +96,7 @@ const Contact = () => {
             <motion.div {...fadeInUp} transition={{ delay: 0.2 }}>
               <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-brand-blue/5 border border-gray-100">
                 <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
-                  <input type="hidden" name="access_key" value="d159f9f1-1352-46ea-93b2-1d85dfd9048b" />
+                  <input type="hidden" name="access_key" value="b141fc0a-ff45-4d07-b9eb-a228e022e449" />
                   <input type="hidden" name="subject" value="New Contact Inquiry" />
                   <input type="hidden" name="from_name" value="Breath Formulations" />
                   <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
