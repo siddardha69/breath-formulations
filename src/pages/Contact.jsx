@@ -25,12 +25,12 @@ const Contact = () => {
 
     emailjs.send(serviceId, templateId, templateParams, publicKey)
       .then((result) => {
-          console.log('SUCCESS!', result.status, result.text);
-          setFormState('success');
+        console.log('SUCCESS!', result.status, result.text);
+        setFormState('success');
       }, (error) => {
-          console.log('FAILED...', error);
-          setFormState('idle');
-          alert("Email delivery failed. Please check your EmailJS IDs.");
+        console.log('FAILED...', error);
+        setFormState('idle');
+        alert("Email delivery failed. Please check your EmailJS IDs.");
       });
   };
 
@@ -99,9 +99,9 @@ const Contact = () => {
                       Borabanda, Allapur, PO: Santhnagar,<br />
                       Malkajgiri, Telangana - 500018
                     </p>
-                    <a 
-                      href="https://www.google.com/maps/search/?api=1&query=Breath+Formulations+14-20-641/C+Rajiv+Gandhi+Nagar+Borabanda+Allapur+Santhnagar+500018" 
-                      target="_blank" 
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=Breath+Formulations+14-20-641/C+Rajiv+Gandhi+Nagar+Borabanda+Allapur+Santhnagar+500018"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-brand-blue text-sm font-bold hover:underline mt-2 inline-block"
                     >
@@ -113,17 +113,17 @@ const Contact = () => {
 
               {/* Map Placeholder */}
               <div className="relative w-full aspect-video rounded-3xl overflow-hidden bg-brand-light border border-gray-100 group shadow-inner">
-                 <div className="absolute inset-0 bg-brand-blue/5 flex items-center justify-center p-8 text-center transition-transform group-hover:scale-105 duration-1000">
-                    <div className="space-y-4">
-                       <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center text-brand-blue shadow-lg">
-                          <MapPin size={32} />
-                       </div>
-                       <div>
-                          <p className="font-bold text-brand-text">Breath Formulations HQ</p>
-                          <p className="text-sm text-brand-muted italic">Telangana, India</p>
-                       </div>
+                <div className="absolute inset-0 bg-brand-blue/5 flex items-center justify-center p-8 text-center transition-transform group-hover:scale-105 duration-1000">
+                  <div className="space-y-4">
+                    <div className="w-16 h-16 bg-white rounded-full mx-auto flex items-center justify-center text-brand-blue shadow-lg">
+                      <MapPin size={32} />
                     </div>
-                 </div>
+                    <div>
+                      <p className="font-bold text-brand-text">Breath Formulations HQ</p>
+                      <p className="text-sm text-brand-muted italic">Telangana, India</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
@@ -137,7 +137,7 @@ const Contact = () => {
                     </div>
                     <h3 className="text-2xl font-heading font-bold text-brand-text">Message Sent!</h3>
                     <p className="text-brand-muted">Thank you for reaching out. Our team will get back to you within 24 hours.</p>
-                    <button 
+                    <button
                       onClick={() => setFormState('idle')}
                       className="btn-outline"
                     >
@@ -151,44 +151,44 @@ const Contact = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-brand-text ml-1">Full Name</label>
-                        <input 
+                        <input
                           required
                           name="name"
-                          type="text" 
-                          placeholder="Dr. Julian Vane"
+                          type="text"
+                          placeholder="Dr. jury"
                           className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-brand-text ml-1">Phone Number</label>
-                        <input 
+                        <input
                           required
                           name="phone"
-                          type="tel" 
+                          type="tel"
                           placeholder="+91 00000 00000"
                           className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
                         />
                       </div>
                     </div>
-                    
+
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-brand-text ml-1">Email Address</label>
-                        <input 
+                        <input
                           required
                           name="email"
-                          type="email" 
+                          type="email"
                           placeholder="name@email.com"
                           className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-sm font-bold text-brand-text ml-1">City / State</label>
-                        <input 
+                        <input
                           required
                           name="location"
-                          type="text" 
-                          placeholder="Vizianagaram, AP"
+                          type="text"
+                          placeholder="hyderabad , telangana"
                           className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
                         />
                       </div>
@@ -197,7 +197,7 @@ const Contact = () => {
 
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-brand-text ml-1">Inquiry Details</label>
-                      <textarea 
+                      <textarea
                         required
                         name="message"
                         rows="4"
@@ -206,8 +206,8 @@ const Contact = () => {
                       ></textarea>
                     </div>
 
-                    <button 
-                      type="submit" 
+                    <button
+                      type="submit"
                       disabled={formState === 'submitting'}
                       className="w-full btn-primary py-5 flex items-center justify-center gap-3 text-lg disabled:opacity-70"
                     >
