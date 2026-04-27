@@ -48,7 +48,7 @@ const About = () => {
                 Founded with a vision to bridge the gap between quality pharmaceutical formulations and affordable access for patients across India, Breath Formulations operates out of Hyderabad, Telangana.
               </p>
               <p>
-                Established in 2024, we are a dedicated pharmaceutical company committed to delivering high-quality, affordable medicines across therapeutic and nutritional categories. We believe that every patient deserves access to life-saving and life-enhancing medications without compromise on quality.
+                Established in 2026, we are a dedicated pharmaceutical company committed to delivering high-quality, affordable medicines across therapeutic and nutritional categories. We believe that every patient deserves access to life-saving and life-enhancing medications without compromise on quality.
               </p>
               <p>
                 Our team consists of industry veterans and healthcare enthusiasts who bring decades of collective experience in pharmaceutical manufacturing, distribution, and clinical excellence.
@@ -57,7 +57,7 @@ const About = () => {
           </motion.div>
           <motion.div {...fadeInUp} className="grid grid-cols-2 gap-4">
              <div className="bg-brand-light rounded-3xl p-8 flex flex-col justify-center text-center space-y-2">
-                <span className="text-4xl font-heading font-extrabold text-brand-blue">2024</span>
+                <span className="text-4xl font-heading font-extrabold text-brand-blue">2026</span>
                 <span className="text-brand-muted font-bold">Founded</span>
              </div>
              <div className="bg-brand-blue text-white rounded-3xl p-8 flex flex-col justify-center text-center space-y-2">

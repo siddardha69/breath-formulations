@@ -160,7 +160,7 @@ const Home = () => {
                   <div className="h-12 w-12 bg-brand-blue rounded-full flex items-center justify-center text-white font-bold">BF</div>
                   <div>
                     <p className="font-bold text-brand-text">Breath Formulations</p>
-                    <p className="text-sm text-brand-muted">Est. 2024 • Vizianagaram</p>
+                    <p className="text-sm text-brand-muted">Est. 2026 • Hyderabad</p>
                   </div>
                 </div>
               </div>
