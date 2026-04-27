@@ -1,48 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, ChevronDown, Plus, Minus, Send, Package, Globe, Headphones } from 'lucide-react';
-import emailjs from '@emailjs/browser';
 
 const Enquiry = () => {
-  const [formState, setFormState] = useState('idle');
   const [openFaq, setOpenFaq] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormState('submitting');
-
-    // Replace these with your actual IDs from EmailJS
-    const serviceId = 'YOUR_SERVICE_ID';
-    const templateId = 'YOUR_TEMPLATE_ID';
-    const publicKey = 'YOUR_PUBLIC_KEY';
-
-    const formData = new FormData(e.target);
-    const interests = formData.getAll('interest');
-
-    const templateParams = {
-      name: e.target.name.value,
-      company_name: e.target.company_name.value,
-      email: e.target.email.value,
-      phone: e.target.phone.value,
-      location: e.target.location.value,
-      requirement: e.target.requirement.value,
-      message: e.target.message.value,
-      interest: interests.join(', '),
-    };
-
-    emailjs.send(serviceId, templateId, templateParams, publicKey)
-      .then((result) => {
-          console.log('SUCCESS!', result.status, result.text);
-          setFormState('success');
-      }, (error) => {
-          console.log('FAILED...', error);
-          setFormState('idle');
-          alert("Email delivery failed. Please check your EmailJS IDs.");
-      });
-  };
-
-
-
 
   const faqs = [
     { q: "What documents are required to become a distributor?", a: "A valid drug license, GST registration, and a signed partnership agreement are required to initiate the partnership." },
@@ -59,7 +20,6 @@ const Enquiry = () => {
 
   return (
     <div className="pb-20">
-      {/* Banner */}
       <section className="bg-brand-blue py-24 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#fff 1px, transparent 1px)', backgroundSize: '40px 40px' }}></div>
         <div className="container-custom relative z-10 text-center max-w-3xl mx-auto">
@@ -71,7 +31,6 @@ const Enquiry = () => {
         </div>
       </section>
 
-      {/* Benefits */}
       <section className="py-20 -mt-12">
         <div className="container-custom">
           <div className="grid md:grid-cols-3 gap-8">
@@ -99,7 +58,6 @@ const Enquiry = () => {
         </div>
       </section>
 
-      {/* Distributor Form */}
       <section className="section-padding bg-brand-light">
         <div className="container-custom max-w-4xl">
           <div className="text-center mb-16 space-y-4">
@@ -108,125 +66,97 @@ const Enquiry = () => {
           </div>
 
           <div className="bg-white rounded-[2.5rem] p-8 md:p-16 shadow-2xl border border-gray-100">
-            {formState === 'success' ? (
-              <div className="text-center py-12 space-y-6">
-                <div className="w-24 h-24 bg-brand-green/10 text-brand-green rounded-full mx-auto flex items-center justify-center">
-                  <CheckCircle2 size={56} />
-                </div>
-                <h3 className="text-3xl font-heading font-bold text-brand-text">Application Received</h3>
-                <p className="text-lg text-brand-muted">Your enquiry has been successfully logged. Our distribution team will contact you shortly to discuss potential synergy.</p>
-                <button onClick={() => setFormState('idle')} className="btn-primary">Back to Form</button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-8">
+            <form action="https://api.web3forms.com/submit" method="POST" className="space-y-8">
+              <input type="hidden" name="access_key" value="d159f9f1-1352-46ea-93b2-1d85dfd9048b" />
+              <input type="hidden" name="subject" value="New Distributor Application" />
+              <input type="hidden" name="from_name" value="Breath Formulations" />
+              <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
 
-
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-brand-text">Full Name</label>
-                    <input required name="name" type="text" placeholder="John Doe" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-brand-text">Business / Company Name</label>
-                    <input required name="company_name" type="text" placeholder="Global Health Ltd" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-brand-text">Phone Number</label>
-                    <input required name="phone" type="tel" placeholder="+91 00000 00000" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-brand-text">Email Address</label>
-                    <input required name="email" type="email" placeholder="partnership@company.com" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <label className="text-sm font-bold text-brand-text">Product Categories Interested In</label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                    {categories.map(cat => (
-                      <label key={cat} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer hover:bg-white hover:border-brand-blue/30 transition-all">
-                        <input type="checkbox" name="interest" value={cat} className="w-5 h-5 accent-brand-blue rounded" />
-                        <span className="text-sm font-medium text-brand-text">{cat}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-brand-text">City & State</label>
-                    <input required name="location" type="text" placeholder="Vizianagaram, AP" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-bold text-brand-text">Monthly Requirement</label>
-                    <select name="requirement" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl appearance-none cursor-pointer">
-                      <option>&lt; 500 units</option>
-                      <option>500–2000 units</option>
-                      <option>2000+ units</option>
-                    </select>
-                  </div>
-                </div>
-
+              <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-brand-text">Additional Message</label>
-                  <textarea name="message" rows="4" placeholder="Tell us about your distribution experience..." className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl resize-none" />
+                  <label className="text-sm font-bold text-brand-text">Full Name</label>
+                  <input required name="name" type="text" placeholder="John Doe" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
                 </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-brand-text">Business / Company Name</label>
+                  <input required name="company_name" type="text" placeholder="Global Health Ltd" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
+                </div>
+              </div>
 
-                <button 
-                  type="submit" 
-                  disabled={formState === 'submitting'}
-                  className="w-full btn-primary py-5 text-xl flex items-center justify-center gap-3 disabled:opacity-70"
-                >
-                  {formState === 'submitting' ? 'Sending...' : 'Submit Application'} 
-                  <Send size={20} />
-                </button>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-brand-text">Phone Number</label>
+                  <input required name="phone" type="tel" placeholder="+91 00000 00000" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-brand-text">Email Address</label>
+                  <input required name="email" type="email" placeholder="partnership@company.com" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-brand-blue/20" />
+                </div>
+              </div>
 
-              </form>
+              <div className="space-y-4">
+                <label className="text-sm font-bold text-brand-text">Product Categories Interested In</label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  {categories.map(cat => (
+                    <label key={cat} className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl border border-gray-200 cursor-pointer hover:bg-white hover:border-brand-blue/30 transition-all">
+                      <input type="checkbox" name="interest" value={cat} className="w-5 h-5 accent-brand-blue rounded" />
+                      <span className="text-sm font-medium text-brand-text">{cat}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
 
-            )}
+              <div className="grid md:grid-cols-2 gap-8">
+                 <div className="space-y-2">
+                  <label className="text-sm font-bold text-brand-text">City & State</label>
+                  <input required name="location" type="text" placeholder="Hyderabad, Telangana" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-brand-text">Monthly Requirement</label>
+                  <select name="requirement" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl appearance-none cursor-pointer">
+                    <option>&lt; 500 units</option>
+                    <option>500–2000 units</option>
+                    <option>2000+ units</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-brand-text">Additional Message</label>
+                <textarea name="message" rows="4" placeholder="Tell us about your distribution experience..." className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl resize-none" />
+              </div>
+
+              <button type="submit" className="w-full btn-primary py-5 text-xl flex items-center justify-center gap-3">
+                Submit Application <Send size={20} />
+              </button>
+            </form>
           </div>
         </div>
       </section>
 
       {/* FAQ Section */}
       <section className="section-padding bg-white">
-        <div className="container-custom max-w-4xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-heading font-bold text-brand-text mb-4">Frequently Asked Questions</h2>
-            <p className="text-brand-muted">Everything you need to know about partnering with Breath Formulations.</p>
-          </div>
-
+        <div className="container-custom max-w-3xl">
+          <h2 className="text-3xl font-heading font-bold text-brand-text text-center mb-12">Partnership FAQ</h2>
           <div className="space-y-4">
-            {faqs.map((faq, i) => (
-              <div 
-                key={i} 
-                className={`rounded-2xl border transition-all duration-300 ${
-                  openFaq === i ? 'border-brand-blue bg-brand-blue/5' : 'border-gray-100 bg-white hover:border-gray-200'
-                }`}
-              >
+            {faqs.map((faq, index) => (
+              <div key={index} className="border border-gray-200 rounded-2xl overflow-hidden">
                 <button 
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full px-8 py-6 flex items-center justify-between text-left"
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full p-6 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
                 >
-                  <span className={`text-lg font-bold ${openFaq === i ? 'text-brand-blue' : 'text-brand-text'}`}>
-                    {faq.q}
-                  </span>
-                  <div className={`transition-transform duration-300 ${openFaq === i ? 'rotate-180 text-brand-blue' : 'text-gray-400'}`}>
-                    <ChevronDown size={24} />
-                  </div>
+                  <span className="font-bold text-brand-text">{faq.q}</span>
+                  <ChevronDown className={`text-brand-blue transition-transform ${openFaq === index ? 'rotate-180' : ''}`} size={20} />
                 </button>
                 <AnimatePresence>
-                  {openFaq === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
+                  {openFaq === index && (
+                    <motion.div 
+                      initial={{ height: 0 }}
+                      animate={{ height: 'auto' }}
+                      exit={{ height: 0 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-8 pb-6 text-brand-muted leading-relaxed border-t border-brand-blue/10 pt-4">
+                      <div className="p-6 pt-0 text-brand-muted leading-relaxed border-t border-gray-100">
                         {faq.a}
                       </div>
                     </motion.div>

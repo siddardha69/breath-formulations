@@ -1,41 +1,7 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, Mail, MapPin, Clock, Send, CheckCircle2 } from 'lucide-react';
-import emailjs from '@emailjs/browser';
+import { Phone, MapPin, Send } from 'lucide-react';
 
 const Contact = () => {
-  const [formState, setFormState] = useState('idle'); // idle, submitting, success
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormState('submitting');
-
-    // Replace these with your actual IDs from EmailJS
-    const serviceId = 'YOUR_SERVICE_ID';
-    const templateId = 'YOUR_TEMPLATE_ID';
-    const publicKey = 'YOUR_PUBLIC_KEY';
-
-    const templateParams = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      phone: e.target.phone.value,
-      location: e.target.location.value,
-      message: e.target.message.value,
-    };
-
-    emailjs.send(serviceId, templateId, templateParams, publicKey)
-      .then((result) => {
-        console.log('SUCCESS!', result.status, result.text);
-        setFormState('success');
-      }, (error) => {
-        console.log('FAILED...', error);
-        setFormState('idle');
-        alert("Email delivery failed. Please check your EmailJS IDs.");
-      });
-  };
-
-
-
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     whileInView: { opacity: 1, y: 0 },
@@ -45,7 +11,6 @@ const Contact = () => {
 
   return (
     <div className="pb-20">
-      {/* Hero Banner */}
       <section className="bg-brand-light py-20">
         <div className="container-custom text-center">
           <motion.div
@@ -130,94 +95,77 @@ const Contact = () => {
             {/* Contact Form */}
             <motion.div {...fadeInUp} transition={{ delay: 0.2 }}>
               <div className="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl shadow-brand-blue/5 border border-gray-100">
-                {formState === 'success' ? (
-                  <div className="text-center py-20 space-y-6">
-                    <div className="w-20 h-20 bg-brand-green/10 text-brand-green rounded-full mx-auto flex items-center justify-center">
-                      <CheckCircle2 size={48} />
-                    </div>
-                    <h3 className="text-2xl font-heading font-bold text-brand-text">Message Sent!</h3>
-                    <p className="text-brand-muted">Thank you for reaching out. Our team will get back to you within 24 hours.</p>
-                    <button
-                      onClick={() => setFormState('idle')}
-                      className="btn-outline"
-                    >
-                      Send another message
-                    </button>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                <form action="https://api.web3forms.com/submit" method="POST" className="space-y-6">
+                  <input type="hidden" name="access_key" value="d159f9f1-1352-46ea-93b2-1d85dfd9048b" />
+                  <input type="hidden" name="subject" value="New Contact Inquiry" />
+                  <input type="hidden" name="from_name" value="Breath Formulations" />
+                  <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
 
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-brand-text ml-1">Full Name</label>
-                        <input
-                          required
-                          name="name"
-                          type="text"
-                          placeholder="Dr. jury"
-                          className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-brand-text ml-1">Phone Number</label>
-                        <input
-                          required
-                          name="phone"
-                          type="tel"
-                          placeholder="+91 00000 00000"
-                          className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-brand-text ml-1">Email Address</label>
-                        <input
-                          required
-                          name="email"
-                          type="email"
-                          placeholder="name@email.com"
-                          className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-sm font-bold text-brand-text ml-1">City / State</label>
-                        <input
-                          required
-                          name="location"
-                          type="text"
-                          placeholder="hyderabad , telangana"
-                          className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
-                        />
-                      </div>
-                    </div>
-
-
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-bold text-brand-text ml-1">Inquiry Details</label>
-                      <textarea
+                      <label className="text-sm font-bold text-brand-text ml-1">Full Name</label>
+                      <input
                         required
-                        name="message"
-                        rows="4"
-                        placeholder="Briefly describe your formulation requirements or supply chain inquiries..."
-                        className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all resize-none"
-                      ></textarea>
+                        name="name"
+                        type="text"
+                        placeholder="Dr. jury"
+                        className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
+                      />
                     </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-brand-text ml-1">Phone Number</label>
+                      <input
+                        required
+                        name="phone"
+                        type="tel"
+                        placeholder="+91 00000 00000"
+                        className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
+                      />
+                    </div>
+                  </div>
 
-                    <button
-                      type="submit"
-                      disabled={formState === 'submitting'}
-                      className="w-full btn-primary py-5 flex items-center justify-center gap-3 text-lg disabled:opacity-70"
-                    >
-                      {formState === 'submitting' ? 'Sending...' : 'Send Message'}
-                      <Send size={20} />
-                    </button>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-brand-text ml-1">Email Address</label>
+                      <input
+                        required
+                        name="email"
+                        type="email"
+                        placeholder="name@email.com"
+                        className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-brand-text ml-1">City / State</label>
+                      <input
+                        required
+                        name="location"
+                        type="text"
+                        placeholder="hyderabad , telangana"
+                        className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all"
+                      />
+                    </div>
+                  </div>
 
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-brand-text ml-1">Inquiry Details</label>
+                    <textarea
+                      required
+                      name="message"
+                      rows="4"
+                      placeholder="Briefly describe your formulation requirements or supply chain inquiries..."
+                      className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/20 focus:border-brand-blue transition-all resize-none"
+                    ></textarea>
+                  </div>
 
-                  </form>
-                )}
+                  <button
+                    type="submit"
+                    className="w-full btn-primary py-5 flex items-center justify-center gap-3 text-lg"
+                  >
+                    Send Message
+                    <Send size={20} />
+                  </button>
+                </form>
               </div>
             </motion.div>
           </div>
