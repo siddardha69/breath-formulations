@@ -11,17 +11,25 @@ const Enquiry = () => {
     setFormState('submitting');
     
     const formData = new FormData(e.target);
-    // Replace 'YOUR_ACCESS_KEY_HERE' with the key from web3forms.com
-    formData.append("access_key", "0d188c4d-89fd-430b-a009-b350dac2dfab");
+    const object = Object.fromEntries(formData);
+    
+    // Convert multiple checkbox values into a string
+    const interests = formData.getAll('interest');
+    if (interests.length > 0) {
+      object.interest = interests.join(', ');
+    }
 
-    formData.append("subject", "New Distributor Application - Breath Formulations");
-    formData.append("from_name", "Breath Formulations Website");
-
+    object.access_key = "0d188c4d-89fd-430b-a009-b350dac2dfab";
+    object.subject = "New Distributor Application - Breath Formulations";
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(object)
       });
 
       const data = await response.json();
@@ -29,16 +37,15 @@ const Enquiry = () => {
       if (data.success) {
         setFormState('success');
       } else {
-        console.log("Error", data);
         setFormState('idle');
-        alert("Submission failed. Please try again.");
+        alert("Submission failed. Please check your Web3Forms dashboard.");
       }
     } catch (error) {
-      console.log("Error", error);
       setFormState('idle');
-      alert("Network error. Please check your connection.");
+      alert("Network error. Please try again.");
     }
   };
+
 
 
   const faqs = [

@@ -10,15 +10,18 @@ const Contact = () => {
     setFormState('submitting');
     
     const formData = new FormData(e.target);
-    // Replace 'YOUR_ACCESS_KEY_HERE' with the key from web3forms.com
-    formData.append("access_key", "0d188c4d-89fd-430b-a009-b350dac2dfab");
+    const object = Object.fromEntries(formData);
+    object.access_key = "0d188c4d-89fd-430b-a009-b350dac2dfab";
+    object.subject = "New Website Contact Inquiry - Breath Formulations";
 
-    formData.append("subject", "New Website Contact Inquiry - Breath Formulations");
-    formData.append("from_name", "Breath Formulations Website");
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify(object)
       });
 
       const data = await response.json();
@@ -26,16 +29,15 @@ const Contact = () => {
       if (data.success) {
         setFormState('success');
       } else {
-        console.log("Error", data);
         setFormState('idle');
-        alert("Submission failed. Please try again.");
+        alert("Submission failed. Please check your Web3Forms dashboard.");
       }
     } catch (error) {
-      console.log("Error", error);
       setFormState('idle');
-      alert("Network error. Please check your connection.");
+      alert("Network error. Please try again.");
     }
   };
+
 
 
   const fadeInUp = {
