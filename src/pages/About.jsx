@@ -45,7 +45,7 @@ const About = () => {
             <h2 className="text-4xl font-heading font-bold text-brand-text">Who We Are</h2>
             <div className="space-y-4 text-brand-muted text-lg leading-relaxed">
               <p>
-                Founded with a vision to bridge the gap between quality pharmaceutical formulations and affordable access for patients across India, Breath Formulations operates out of Vizianagaram, Andhra Pradesh.
+                Founded with a vision to bridge the gap between quality pharmaceutical formulations and affordable access for patients across India, Breath Formulations operates out of Hyderabad, Telangana.
               </p>
               <p>
                 Established in 2024, we are a dedicated pharmaceutical company committed to delivering high-quality, affordable medicines across therapeutic and nutritional categories. We believe that every patient deserves access to life-saving and life-enhancing medications without compromise on quality.
@@ -65,8 +65,8 @@ const About = () => {
                 <span className="text-blue-100 font-bold">Products</span>
              </div>
              <div className="bg-brand-text text-white rounded-3xl p-8 flex flex-col justify-center text-center space-y-2 col-span-2">
-                <span className="text-4xl font-heading font-extrabold">Vizianagaram</span>
-                <span className="text-gray-400 font-bold">Andhra Pradesh, India</span>
+                <span className="text-4xl font-heading font-extrabold">Hyderabad</span>
+                <span className="text-gray-400 font-bold">Telangana, India</span>
              </div>
           </motion.div>
         </div>

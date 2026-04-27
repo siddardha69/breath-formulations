@@ -52,7 +52,7 @@ const Enquiry = () => {
     { q: "Are your products WHO-GMP certified?", a: "Yes, all our formulations are manufactured in WHO-GMP compliant facilities with rigorous quality control measures." },
     { q: "Can I get samples before placing a bulk order?", a: "Sample requests can be made through this enquiry form or by calling our distribution team directly." },
     { q: "What are your payment terms?", a: "We offer flexible payment terms for registered distributors based on partnership duration and order volume." },
-    { q: "Who do I contact for urgent orders?", a: "For urgent requirements, please call us directly at +91 79976 94788 for priority handling." },
+    { q: "Who do I contact for urgent orders?", a: "For urgent requirements, please call us directly at +91 94906 62886 for priority handling." },
   ];
 
   const categories = ['Analgesic', 'Antipyretic', 'Antibiotics', 'Gastro', 'PPI', 'Bacillus Clausii', 'Calcium', 'Iron'];

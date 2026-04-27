@@ -172,7 +172,7 @@ const Home = () => {
               Precision-Driven Health Excellence
             </h2>
             <p className="text-brand-muted leading-relaxed text-lg">
-              Breath Formulations is a dedicated pharmaceutical company based in Vizianagaram, Andhra Pradesh. We are committed to delivering high-quality, affordable medicines across therapeutic and nutritional categories — reaching patients and healthcare professionals across India.
+              Breath Formulations is a dedicated pharmaceutical company based in Hyderabad, Telangana. We are committed to delivering high-quality, affordable medicines across therapeutic and nutritional categories — reaching patients and healthcare professionals across India.
             </p>
             <ul className="space-y-4">
               {[
@@ -239,7 +239,7 @@ const Home = () => {
             {[
               { title: 'Quality Assurance', desc: 'Every product meets strict quality standards with proper documentation and batch testing.', icon: <ShieldCheck size={32} /> },
               { title: 'Wide Portfolio', desc: 'From analgesics to probiotics, we cover the essential therapeutic and nutritional needs.', icon: <LayoutGrid size={32} /> },
-              { title: 'Reliable Supply', desc: 'Consistent and timely delivery to distributors and stockists across Andhra Pradesh.', icon: <Truck size={32} /> },
+              { title: 'Reliable Supply', desc: 'Consistent and timely delivery to distributors and stockists across Telangana.', icon: <Truck size={32} /> },
             ].map((feature, i) => (
               <motion.div
                 key={i}
